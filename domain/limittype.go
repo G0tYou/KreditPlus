@@ -5,6 +5,6 @@ type LimitType struct {
 	Tenor int `json:"tenor"`
 }
 
-type Service interface{}
+type ServiceLimitType interface{}
 
-type RepositoryMySQL interface{}
+type RepositoryMySQLLimitType interface{}
