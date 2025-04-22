@@ -25,8 +25,8 @@ func (s *serviceLimitType) AddLimitType(ctx context.Context, lt *d.LimitType) (i
 }
 
 // Write the listing service below
-// ReadLimitTypes is a method to get list of limit_type from the repository
-func (s *serviceLimitType) ReadLimitTypes(ctx context.Context) ([]d.LimitType, error) {
+// GetLimitTypes is a method to get list of limit_type from the repository
+func (s *serviceLimitType) GetLimitTypes(ctx context.Context) ([]d.LimitType, error) {
 	lts, err := s.rmsqllt.ReadLimitTypes(ctx)
 	if err != nil {
 		return nil, err
