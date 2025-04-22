@@ -9,7 +9,7 @@ type LimitType struct {
 
 type ServiceLimitType interface {
 	AddLimitType(ctx context.Context, lt *LimitType) (int, error)
-	ReadLimitTypes(ctx context.Context) ([]LimitType, error)
+	GetLimitTypes(ctx context.Context) ([]LimitType, error)
 }
 
 type RepositoryMySQLLimitType interface {
