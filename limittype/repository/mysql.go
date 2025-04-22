@@ -11,6 +11,7 @@ type mysqlUserRepository struct {
 	Conn *sql.DB
 }
 
+// NewMysqlUserRepository creates a new instance of mysqlUserRepository
 func NewMysqlUserRepository(conn *sql.DB) d.RepositoryMySQLLimitType {
 	return &mysqlUserRepository{conn}
 }
