@@ -4,7 +4,7 @@ import "context"
 
 type LimitType struct {
 	ID    int `json:"id"`
-	Tenor int `json:"tenor"`
+	Tenor int `json:"tenor" validate:"required"`
 }
 
 type ServiceLimitType interface {
