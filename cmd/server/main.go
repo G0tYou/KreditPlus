@@ -10,9 +10,9 @@ import (
 	"github.com/labstack/echo"
 	"github.com/spf13/viper"
 
-	limittypedeliveryhttp "app/limittype/delivery/http"
-	limittyperepo "app/limittype/repository"
-	limittypeservice "app/limittype/service"
+	limittypedeliveryhttp "app/internal/delivery/http"
+	limittyperepo "app/internal/repository/mysql"
+	limittypeservice "app/internal/service"
 )
 
 func init() {
