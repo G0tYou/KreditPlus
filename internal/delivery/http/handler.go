@@ -2,7 +2,6 @@ package http
 
 import (
 	d "app/domain"
-	"net/http"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo"
@@ -10,14 +9,16 @@ import (
 
 var validate *validator.Validate
 
+type ResponseSuccess struct {
+	Data    interface{} `json:"data,omitempty"`
+	Message string      `json:"message"`
+}
+
 type ResponseError struct {
 	Message string `json:"message"`
 }
 
-type LimitTypeHandler struct {
-	slt d.ServiceLimitType
-}
-
+// registers LimitType routes with the provided Echo instance.
 func NewLimitTypeHandler(e *echo.Echo, slt d.ServiceLimitType) {
 	handler := &LimitTypeHandler{slt}
 	//adding
@@ -26,33 +27,9 @@ func NewLimitTypeHandler(e *echo.Echo, slt d.ServiceLimitType) {
 	e.GET("/limittypes", handler.GetLimitTypes)
 }
 
-func (h *LimitTypeHandler) AddLimitType(c echo.Context) error {
-	var lt *d.LimitType
-
-	if err := c.Bind(&lt); err != nil {
-		return c.JSON(http.StatusBadRequest, ResponseError{Message: http.StatusText(http.StatusBadRequest)})
-	}
-
-	// Validate the request body
-	// Use the validator package to validate the struct fields
-	validate = validator.New()
-	if err := validate.Struct(lt); err != nil {
-		return c.JSON(http.StatusBadRequest, ResponseError{Message: err.Error()})
-	}
-
-	_, err := h.slt.AddLimitType(c.Request().Context(), lt)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
-	}
-
-	return c.JSON(http.StatusCreated, http.StatusText(http.StatusCreated))
-}
-
-func (h *LimitTypeHandler) GetLimitTypes(c echo.Context) error {
-	lts, err := h.slt.GetLimitTypes(c.Request().Context())
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, ResponseError{Message: http.StatusText(http.StatusInternalServerError)})
-	}
-
-	return c.JSON(http.StatusOK, lts)
+// registers User routes with the provided Echo instance.
+func NewUserHandler(e *echo.Echo, su d.ServiceUser) {
+	handler := &UserHandler{su}
+	//adding
+	e.POST("/register", handler.AddUser)
 }

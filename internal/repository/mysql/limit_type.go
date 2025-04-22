@@ -7,18 +7,18 @@ import (
 	d "app/domain"
 )
 
-type mysqlLimitTypeRepository struct {
+type mysqlRepositoryLimitType struct {
 	Conn *sql.DB
 }
 
 // NewMysqlLimitTypeRepository creates a new instance of mysqlLimitTypeRepository
-func NewMysqlLimitTypeRepository(conn *sql.DB) d.RepositoryMySQLLimitType {
-	return &mysqlLimitTypeRepository{conn}
+func NewMysqlRepositoryLimitType(conn *sql.DB) d.RepositoryMySQLLimitType {
+	return &mysqlRepositoryLimitType{conn}
 }
 
 // Write the adding repository below
 // AddLimitType is a method to add a new limit_type to the database
-func (m *mysqlLimitTypeRepository) AddLimitType(ctx context.Context, lt *d.LimitType) (int, error) {
+func (m *mysqlRepositoryLimitType) AddLimitType(ctx context.Context, lt *d.LimitType) (int, error) {
 	query := "INSERT limit_type SET tenor = ?"
 
 	stmt, err := m.Conn.PrepareContext(ctx, query)
@@ -41,7 +41,7 @@ func (m *mysqlLimitTypeRepository) AddLimitType(ctx context.Context, lt *d.Limit
 
 // Write the listing repository below
 // ReadLimitTypes is a method to get list of limit_type from the database
-func (m *mysqlLimitTypeRepository) ReadLimitTypes(ctx context.Context) ([]d.LimitType, error) {
+func (m *mysqlRepositoryLimitType) ReadLimitTypes(ctx context.Context) ([]d.LimitType, error) {
 	query := "SELECT id, tenor FROM limit_type"
 
 	stmt, err := m.Conn.PrepareContext(ctx, query)
