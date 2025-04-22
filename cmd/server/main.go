@@ -9,6 +9,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo"
 	"github.com/spf13/viper"
+
+	limittypedeliveryhttp "app/limittype/delivery/http"
+	limittyperepo "app/limittype/repository"
+	limittypeservice "app/limittype/service"
 )
 
 func init() {
@@ -49,6 +53,9 @@ func main() {
 	}()
 
 	e := echo.New()
+	ltr := limittyperepo.NewMysqlLimitTypeRepository(dbConn)
+	lts := limittypeservice.NewServiceLimitType(ltr)
+	limittypedeliveryhttp.NewLimitTypeHandler(e, lts)
 
 	log.Fatal(e.Start(viper.GetString("server.address")))
 
