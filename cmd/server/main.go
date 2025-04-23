@@ -64,6 +64,11 @@ func main() {
 	su := service.NewServiceUser(mysqlru)
 	http.NewUserHandler(e, su)
 
+	//user_profile routes
+	mysqlrup := repo.NewMysqlRepositoryUserProfile(dbConn)
+	sup := service.NewServiceUserProfile(mysqlrup)
+	http.NewUserProfileHandler(e, sup)
+
 	log.Fatal(e.Start(viper.GetString("server.address")))
 
 }
