@@ -50,4 +50,7 @@ func NewUserProfileHandler(e *echo.Echo, sup d.ServiceUserProfile) {
 	//adding
 	userGroup.POST("/profile", handler.AddUserProfile)
 
+	//listing
+	userGroup.GET("/profile", handler.GetUserProfileByUserID)
+
 }

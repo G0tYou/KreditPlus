@@ -38,3 +38,21 @@ func (h *UserProfileHandler) AddUserProfile(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, ResponseSuccess{Message: http.StatusText(http.StatusCreated)})
 }
+
+// GetUserProfileByUserID handles the request to get a user_profile by user_id
+func (h *UserProfileHandler) GetUserProfileByUserID(c echo.Context) error {
+
+	//get userID from context
+	uid := int(c.Get("userID").(int64))
+
+	up, err := h.sup.GetUserProfileByUserID(c.Request().Context(), uid)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, ResponseError{Message: http.StatusText(http.StatusInternalServerError)})
+	}
+
+	if up.ID == 0 {
+		return c.JSON(http.StatusNotFound, ResponseError{Message: http.StatusText(http.StatusNotFound)})
+	}
+
+	return c.JSON(http.StatusOK, ResponseSuccess{Data: up, Message: http.StatusText(http.StatusOK)})
+}

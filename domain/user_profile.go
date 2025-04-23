@@ -21,10 +21,18 @@ type ServiceUserProfile interface {
 	// Adding service
 	// AddUserProfile is a method to add a new user_profile to the database
 	AddUserProfile(ctx context.Context, up *UserProfile) (int, error)
+
+	// Listing service
+	// GetUserProfileByUserID is a method to get user_profile by user_id from the database
+	GetUserProfileByUserID(ctx context.Context, userID int) (UserProfile, error)
 }
 
 type RepositoryMySQLUserProfile interface {
 	// Adding repository
 	// AddUserProfile is a method to add a new user_profile to the database
 	AddUserProfile(ctx context.Context, up *UserProfile) (int, error)
+
+	// Listing repository
+	// ReadUserProfileByUserID is a method to get user_profile by user_id from the database
+	ReadUserProfileByUserID(ctx context.Context, userID int) (UserProfile, error)
 }

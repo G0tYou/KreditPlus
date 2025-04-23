@@ -30,3 +30,14 @@ func (s *serviceUserProfile) AddUserProfile(ctx context.Context, up *d.UserProfi
 
 	return id, nil
 }
+
+// write the listing service below
+// GetUserProfileByUserID is a method to get user_profile by user_id from the repository
+func (s *serviceUserProfile) GetUserProfileByUserID(ctx context.Context, userID int) (d.UserProfile, error) {
+	up, err := s.rmsqlup.ReadUserProfileByUserID(ctx, userID)
+	if err != nil {
+		return up, err
+	}
+
+	return up, nil
+}
