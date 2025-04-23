@@ -9,7 +9,7 @@ import (
 )
 
 type UserHandler struct {
-	slt d.ServiceUser
+	su d.ServiceUser
 }
 
 // AddUser handles the request to add a new user
@@ -27,7 +27,7 @@ func (h *UserHandler) AddUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, ResponseError{Message: err.Error()})
 	}
 
-	_, err := h.slt.AddUser(c.Request().Context(), u)
+	_, err := h.su.AddUser(c.Request().Context(), u)
 	if err != nil {
 		if err == d.ErrConflictUsername {
 			return c.JSON(http.StatusConflict, ResponseError{Message: err.Error()})
@@ -54,7 +54,7 @@ func (h *UserHandler) Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, ResponseError{Message: err.Error()})
 	}
 
-	jwt, err := h.slt.Login(c.Request().Context(), u)
+	jwt, err := h.su.Login(c.Request().Context(), u)
 	if err != nil {
 		if err == d.ErrUserNotFound {
 			return c.JSON(http.StatusNotFound, ResponseError{Message: err.Error()})

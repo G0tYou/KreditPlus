@@ -2,9 +2,11 @@ package http
 
 import (
 	d "app/domain"
+	"app/internal/delivery/http/middleware"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo"
+	"github.com/spf13/viper"
 )
 
 var validate *validator.Validate
@@ -36,4 +38,19 @@ func NewUserHandler(e *echo.Echo, su d.ServiceUser) {
 
 	//validating
 	e.POST("/login", handler.Login)
+}
+
+// registers UserProfile routes with the provided Echo instance.
+func NewUserProfileHandler(e *echo.Echo, sup d.ServiceUserProfile) {
+	handler := &UserProfileHandler{sup}
+
+	userGroup := e.Group("/user")
+	userGroup.Use(middleware.JWTAuth(viper.GetString("jwt.secret")))
+
+	//adding
+	userGroup.POST("/profile", handler.AddUserProfile)
+
+	//listing
+	userGroup.GET("/profile", handler.GetUserProfileByUserID)
+
 }
