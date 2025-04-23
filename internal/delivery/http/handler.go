@@ -30,6 +30,19 @@ func NewLimitTypeHandler(e *echo.Echo, slt d.ServiceLimitType) {
 	e.GET("/limittypes", handler.GetLimitTypes)
 }
 
+// registers Loan routes with the provided Echo instance.
+func NewLoanHandler(e *echo.Echo, sl d.ServiceLoan) {
+	handler := &LoanHandler{sl}
+
+	userGroup := e.Group("/loan")
+	userGroup.Use(middleware.JWTAuth(viper.GetString("jwt.secret")))
+
+	//adding
+	userGroup.POST("/transaction", handler.AddLoan)
+
+	//listing
+}
+
 // registers User routes with the provided Echo instance.
 func NewUserHandler(e *echo.Echo, su d.ServiceUser) {
 	handler := &UserHandler{su}
