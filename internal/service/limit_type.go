@@ -9,7 +9,7 @@ type serviceLimitType struct {
 	rmsqllt d.RepositoryMySQLLimitType
 }
 
-// NewService creates an adding service with the necessary dependencies
+// NewService creates an service with the necessary dependencies
 func NewServiceLimitType(rmsqllt d.RepositoryMySQLLimitType) d.ServiceLimitType {
 	return &serviceLimitType{rmsqllt}
 }

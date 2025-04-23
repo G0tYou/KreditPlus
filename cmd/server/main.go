@@ -10,9 +10,9 @@ import (
 	"github.com/labstack/echo"
 	"github.com/spf13/viper"
 
-	limittypedeliveryhttp "app/internal/delivery/http"
-	limittyperepo "app/internal/repository/mysql"
-	limittypeservice "app/internal/service"
+	http "app/internal/delivery/http"
+	repo "app/internal/repository/mysql"
+	service "app/internal/service"
 )
 
 func init() {
@@ -53,9 +53,16 @@ func main() {
 	}()
 
 	e := echo.New()
-	ltr := limittyperepo.NewMysqlLimitTypeRepository(dbConn)
-	lts := limittypeservice.NewServiceLimitType(ltr)
-	limittypedeliveryhttp.NewLimitTypeHandler(e, lts)
+
+	//limit_type routes
+	mysqlrlt := repo.NewMysqlRepositoryLimitType(dbConn)
+	slt := service.NewServiceLimitType(mysqlrlt)
+	http.NewLimitTypeHandler(e, slt)
+
+	//user routes
+	mysqlru := repo.NewMysqlRepositoryUser(dbConn)
+	su := service.NewServiceUser(mysqlru)
+	http.NewUserHandler(e, su)
 
 	log.Fatal(e.Start(viper.GetString("server.address")))
 
