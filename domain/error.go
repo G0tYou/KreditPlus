@@ -9,6 +9,6 @@ var (
 	ErrConflictUsername    = errors.New("your Username already exist")
 	ErrBadParamInput       = errors.New("given Param is not valid")
 	ErrUserNotFound        = errors.New("your Username is not found")
-	ErrLogin               = errors.New("login failed, wrong password")
+	ErrLogin               = errors.New("login failed, wrong username or password")
 	ErrGenerateToken       = errors.New("error while generating token")
 )

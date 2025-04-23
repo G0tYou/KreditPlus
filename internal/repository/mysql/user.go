@@ -39,6 +39,31 @@ func (m *mysqlRepositoryUser) AddUser(ctx context.Context, u *d.User) (int, erro
 	return int(id), nil
 }
 
+// write the listing repository below
+// ReadUser is a method to get data user from the database
+func (m *mysqlRepositoryUser) ReadUserByUsername(ctx context.Context, username string) (*d.User, error) {
+	query := "SELECT id, username, password FROM user WHERE username = ?"
+
+	stmt, err := m.Conn.PrepareContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRowContext(ctx, username)
+
+	var u d.User
+	err = row.Scan(&u.ID, &u.Username, &u.Password)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, d.ErrNotFound
+		}
+		return nil, err
+	}
+
+	return &u, nil
+}
+
 // Write the validating repository below
 // ExistByUsername is a method to validate user is exist in the database
 func (m *mysqlRepositoryUser) ExistByUsername(ctx context.Context, username string) (bool, error) {

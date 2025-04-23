@@ -12,3 +12,8 @@ func EncodePassword(pass string) (string, error) {
 
 	return string(hash), nil
 }
+
+// ComparePassword compares a hashed password with its plaintext equivalent
+func ComparePassword(hashedPassword, plainPassword string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
+}
