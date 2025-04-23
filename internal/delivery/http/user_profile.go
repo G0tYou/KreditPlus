@@ -2,7 +2,6 @@ package http
 
 import (
 	d "app/domain"
-	"fmt"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -31,7 +30,6 @@ func (h *UserProfileHandler) AddUserProfile(c echo.Context) error {
 	}
 
 	_, err := h.sup.AddUserProfile(c.Request().Context(), up)
-	fmt.Println(err)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, ResponseError{Message: http.StatusText(http.StatusInternalServerError)})
 	}

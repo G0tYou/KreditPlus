@@ -59,6 +59,12 @@ func main() {
 	slt := service.NewServiceLimitType(mysqlrlt)
 	http.NewLimitTypeHandler(e, slt)
 
+	//loan routes
+	mysqlrlo := repo.NewMysqlRepositoryLoan(dbConn)
+	mysqlrli := repo.NewMysqlRepositoryLimit(dbConn)
+	sl := service.NewServiceLoan(mysqlrlo, mysqlrli)
+	http.NewLoanHandler(e, sl)
+
 	//user routes
 	mysqlru := repo.NewMysqlRepositoryUser(dbConn)
 	su := service.NewServiceUser(mysqlru)
