@@ -23,13 +23,7 @@ func (m *mysqlRepositoryLimit) ReadTXLimitByID(ctx context.Context, tx *sql.Tx, 
 
 	query := "SELECT id, limit_type_id, user_id, amount, used_amount FROM `limit` WHERE id = ? FOR UPDATE"
 
-	stmt, err := m.Conn.PrepareContext(ctx, query)
-	if err != nil {
-		return l, err
-	}
-	defer stmt.Close()
-
-	err = tx.QueryRowContext(ctx, query, lid).Scan(&l.ID, &l.LimitTypeID, &l.UserID, &l.Amount, &l.UsedAmount)
+	err := tx.QueryRowContext(ctx, query, lid).Scan(&l.ID, &l.LimitTypeID, &l.UserID, &l.Amount, &l.UsedAmount)
 	if err != nil {
 		return l, err
 	}
